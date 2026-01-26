@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>name 속성을 이용한 선택</title>
+  </head>
+  <body>
+    <form action="#">
+      <h1>name 속성을 이용한 선택</h1>
+      <div>
+        <span>아이디</span>
+        <input type="text" name="id" value="hong1234" />
+      </div>
+      <div>
+        <span>비밀번호</span>
+        <input type="text" name="password" value="1234" />
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="language" value="js" />
+          <span>JS</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="language" value="python" />
+          <span>Python</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="language" value="java" />
+          <span>JAVA</span>
+        </label>
+      </div>
+
+      <div id="apply">제출 테스트</div>
+    </form>
+  </body>
+  <script>
+    console.log(document.getElementsByName("id")[0].value);
+    const idInputBox = document.getElementsByName("id")[0];
+    const applyButton = document.querySelector("#apply");
+
+    // 사용자가 입력 하는 값을 저장
+    let userInputText = "";
+
+    // 이벤트 리스너 걸어보기
+    idInputBox.addEventListener("input", (e) => {
+      // console.log(e);
+      userInputText = e.target.value;
+      console.log(userInputText);
+    });
+
+    const checkBoxes = document.getElementsByName("language");
+    console.log(checkBoxes);
+    checkBoxes.forEach((checkBox) => {
+      // 모든 체크박스를 체크 상태로 만들고싶음.
+      console.log(checkBox);
+      checkBox.checked = true;
+    });
+
+    // 제출 버튼 구현
+    console.log(applyButton);
+    applyButton.addEventListener("click", () => {
+      console.log("유저 이름 제출합니다.");
+      console.log(`${userInputText}님 환영`);
+    });
+  </script>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>약관 동의</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <label>
+          <input id="all-agree" type="checkbox" />
+          <span>전체 동의</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" class="agree" name="ag-1" />
+          <span class="agree-text" id="ag-1">짐 분실 면책 동의</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" class="agree" name="ag-2" />
+          <span class="agree-text" id="ag-2">늦을 경우 10배 패널티 동의</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" class="agree" name="ag-3" />
+          <span class="agree-text" id="ag-3">사진 촬영 시 패널티</span>
+        </label>
+      </div>
+    </div>
+  </body>
+  <script>
+    const agreeList = Array.from(document.querySelectorAll(".agree"));
+    const allAgree = document.querySelector("#all-agree");
+    const agreeText = Array.from(document.querySelectorAll(".agree-text"));
+    const isAgreed = new Array(agreeList.length);
+    let agreedCount = 0;
+
+    // 각 낱개 버튼에 대한 기능구현
+    agreeList.forEach((agree, i) => {
+      agree.addEventListener("click", (e) => {
+        console.log(e.target.checked);
+        console.log(e);
+        if (e.target.checked) {
+          isAgreed[i] = agree;
+          agreedCount++;
+        } else {
+          isAgreed[i] = null;
+          agreedCount--;
+        }
+
+        if (agreedCount === agreeList.length) {
+          allAgree.checked = true;
+        } else {
+          allAgree.checked = false;
+        }
+
+        console.log(agreedCount);
+        console.log(isAgreed);
+      });
+    });
+
+    // 전체 버튼에 대한 기능 구현
+    allAgree.addEventListener("click", (e) => {
+      if (e.target.checked) {
+        agreedCount = 3;
+        agreeList.forEach((agree) => {
+          agree.checked = true;
+        });
+      } else {
+        agreedCount = 0;
+        agreeList.forEach((agree) => {
+          agree.checked = false;
+        });
+      }
+    });
+    console.log(agreeList);
+  </script>
+</html>

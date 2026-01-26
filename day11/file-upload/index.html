@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일 첨부</title>
+    <link rel="stylesheet" href="./style/style.css" />
+  </head>
+  <body>
+    <div>
+      <label for="select" id="profile-area">
+        <!-- 프로필 이미지 영역 -->
+        <div id="profile-image"></div>
+
+        <!-- 삭제 버튼 -->
+        <!-- 해당 부분이 이상하게 보임 -->
+        <!-- 원래는 기본 프로필 이미지 오른쪽 위 부분에 x 표시를 삽입 목적 -->
+        <!-- 그런데 이상한 이미지로 보임 -->
+        <!-- 해결 원함 -->
+        <div id="cancel"></div>
+      </label>
+      <!-- 파일 첨부 버튼 -->
+      <input type="file" id="select" class=".file-select" />
+    </div>
+  </body>
+  <script>
+    // 기본 프로필 이미지를 선택 해서 파일 선택을 하면 선택한 프로필 이미지로 설명
+    // 만약 다시 x 를 누르면 기존 오리지날 프로필 이미지로 돌아오는 로직 구현하기
+
+    // dom 객체
+    const profileImage = document.querySelector("#profile-image");
+    const cancel = document.querySelector("#cancel");
+    const fileSelect = document.querySelector("#select");
+
+    // 기본 프로필 이미지
+    const defaultProfile = "./images/original-profile.jpg";
+
+    // ✅ objectURL 메모리 관리용
+    let currentObjectUrl = null;
+
+    fileSelect.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return; // 선택 취소
+
+      // ✅ 이미지 파일만 허용
+      if (!file.type.startsWith("image/")) {
+        alert("이미지 파일만 선택할 수 있어요!");
+        fileSelect.value = ""; // 선택 초기화
+        return;
+      }
+
+      // ✅ 이전 objectURL 있으면 해제
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+
+      // ✅ 선택된 이미지로 배경 변경
+      currentObjectUrl = URL.createObjectURL(file);
+      profileImage.style.backgroundImage = `url("${currentObjectUrl}")`;
+
+      // ✅ X 아이콘 표시
+      cancel.classList.add("show");
+    });
+
+    // 이벤트 리스너로 캔슬 버튼 클릭 감지
+    cancel.addEventListener("click", (e) => {
+      // ✅ label 클릭(파일 선택 열림)까지 같이 타는 거 막기
+      e.preventDefault();
+      e.stopPropagation();
+
+      // ✅ 기본 이미지로 복귀
+      profileImage.style.backgroundImage = `url("${defaultProfile}")`;
+
+      // ✅ X 숨기기
+      cancel.classList.remove("show");
+
+      // ✅ 파일 선택 값 초기화 (같은 파일 다시 선택 가능하게)
+      fileSelect.value = "";
+
+      // ✅ objectURL 해제
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+    });
+  </script>
+</html>

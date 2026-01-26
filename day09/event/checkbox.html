@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체크박스</title>
+  </head>
+  <body>
+    <form action="#">
+      <div>
+        <label>
+          <span>전체 동의</span>
+          <input type="checkbox" name="all" class="all" />
+        </label>
+      </div>
+      <div>
+        <label>
+          <span>강의장 청소 동의</span>
+          <input type="checkbox" name="term1" class="term" />
+        </label>
+      </div>
+      <div>
+        <label>
+          <span>이규혁 잔류 동의</span>
+          <input type="checkbox" name="term2" class="term" />
+        </label>
+      </div>
+      <div>
+        <label>
+          <span>강대훈 잔류 동의</span>
+          <input type="checkbox" name="term3" class="term" />
+        </label>
+      </div>
+      <div>
+        <label>
+          <span>김세종 잔류 동의</span>
+          <input type="checkbox" name="term4" class="term" />
+        </label>
+      </div>
+    </form>
+  </body>
+  <script>
+    const all = document.querySelector("input.all");
+    const terms = document.querySelectorAll("input.term");
+
+    // 여기서 동의를 한거 안한거 이렇게 나눠도 되긴 함
+    // 아직 동의를 안한거도 담아놔야 추후 고객한테 어디가 안됬다고 알리기 가능
+    let agreedTerms = new Array();
+    let notAgreed = new Array();
+    console.log(terms);
+
+    all.addEventListener("click", (e) => {
+      terms.forEach((term) => {
+        // 전체 동의를 체크하면 나머지 체크박스 모두 체크 상태로 변경
+        // 전체 동의를 상태를 체크 해제하면 나머지 체크박스 모두 체크해제
+        // term.checked = all.checked
+        console.log(term);
+        if (e.target.checked) {
+          term.checked = true;
+          // agreeCount = terms.length;
+          agreedTerms = Array.from(terms);
+          notAgreed = [];
+        } else {
+          term.checked = false;
+          // agreeCount = 0;
+          agreedTerms = [];
+          notAgreed = Array.from(terms);
+        }
+      });
+    });
+
+    // 그리고 하위 항목에 클릭을 해서 모두 해져버리면 체크 실행, 아니면 반대로
+    terms.forEach((term) => {
+      // 각 하위 항목에 리스너 걸기
+      term.addEventListener("click", (e) => {
+        // 클릭 될 때 마다 동의한 약관 담는 배열 갱신
+        agreedTerms = Array.from(terms).filter((term) => term.checked);
+        notAgreed = Array.from(terms).filter((term) => !term.checked);
+        // 해당 항목을 체크 하기
+        // 일단 클릭이 감지 되면 클릭이 된 이후
+        // 동의를 클릭 -> 동의 클릭한 뒤: 동의 상태
+        // 헤재 -> 해제 위해 클릭 한 상태: 해제 상태
+        // if (e.target.checked) {
+        //   agreeCount++;
+        // } else {
+        //   agreeCount--;
+        // }
+        // agreeCount 가지고 전체 동의 여부 확인
+        console.log(`길이: ${agreedTerms.length}`);
+        console.log(`동의한 항목: ${agreedTerms}`);
+        console.log(`아직 안한 항목: ${notAgreed}`);
+
+        if (agreedTerms.length < terms.length) {
+          all.checked = false;
+        } else {
+          all.checked = true;
+        }
+      });
+    });
+  </script>
+</html>

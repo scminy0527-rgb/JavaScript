@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 홈페이지 탭 에 있는 작은 아이콘 -->
+    <link rel="shortcut icon" href="https://login.coupang.com/favicon.ico" />
+    <title>쿠팡</title>
+
+    <link rel="stylesheet" href="coupangStyle.css" />
+  </head>
+  <body>
+    <div class="container">
+      <img src="./images/coupang/coupang-logo.png" alt="쿠팡 메인 로고" />
+      <h4>회원정보를 입력해주세요</h4>
+
+      <!-- 회원가입 하는 거 구현 -->
+
+      <form action="회원가입 진행" style="align-items: center">
+        <div>
+          <span
+            ><img src="./images/coupang/email.png" alt="" width="20"
+          /></span>
+          <input type="email" placeholder="아이디(이메일)" name="id" />
+        </div>
+
+        <div>
+          <span><img src="./images/coupang/pw.png" alt="" width="20" /></span>
+          <input type="password" placeholder="비밀번호" name="password" />
+        </div>
+
+        <div>
+          <span
+            ><img src="./images/coupang/pw-check.png" alt="" width="20"
+          /></span>
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            name="password-check"
+          />
+        </div>
+        <div>
+          <span><img src="./images/coupang/name.png" alt="" width="20" /></span>
+          <input type="text" placeholder="이름" name="name" />
+        </div>
+        <div>
+          <span
+            ><img src="./images/coupang/phone.png" alt="" width="20"
+          /></span>
+          <input type="text" placeholder="휴대폰번호" name="phone-number" />
+        </div>
+
+        <br />
+
+        <!-- 세번째 버전 도움 -->
+        <div class="agree-block">
+          <!-- Row: 체크박스 + 큰 문장만 label -->
+          <label class="agree-row" for="agreeAll">
+            <input id="agreeAll" type="checkbox" />
+            <span class="agree-title">모두 확인하였으며 동의합니다.</span>
+          </label>
+
+          <!-- Column 아래: 작은 안내문(클릭 영역에 포함 X) -->
+          <p class="agree-desc">
+            전체 동의에는 필수 및 선택 정보에 대한 동의가 포함되어 있으며,
+            개별적으로 동의를 선택하실 수 있습니다. 선택 항목에 대한 동의를
+            거부하시는 경우에도 서비스 이용이 가능합니다.
+          </p>
+        </div>
+
+        <br />
+
+        <fieldset>
+          <div>
+            <label class="agree-row">
+              <input type="checkbox" name="is-age-order-14" value="yes" />
+              <span>[필수] 만 14세 이상입니다</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="agree-row">
+              <input
+                type="checkbox"
+                name="is-agree-terms-of-service"
+                value="yes"
+              />
+              <span>[필수] 쿠팡 이용약관 동의</span>
+            </label>
+          </div>
+          <div>
+            <label class="agree-row">
+              <input type="checkbox" name="is-agree-digital-bank" value="yes" />
+              <span>[필수] 전자금융거래 이용약관 동의</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="agree-row">
+              <input type="checkbox" name="is-pinfo-agree" value="yes" />
+              <span>[필수] 개인정보 수집 및 이용에 동의</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="agree-row">
+              <input
+                type="checkbox"
+                name="is-info-third-give-agree"
+                value="yes"
+              />
+              <span>[필수] 개인정보 제3자 제공 동의</span>
+            </label>
+          </div>
+          <label class="agree-row">
+            <input type="checkbox" name="is-ad-receive-agree" value="yes" />
+            <span>[선택] 광고성 정보 수신 동의</span>
+          </label>
+
+          <!-- 여기서 부터 들여쓰는 선택 옵션 -->
+
+          <div class="optional-agree">
+            <label class="agree-row">
+              <input
+                type="checkbox"
+                name="is-email-recieve-agree"
+                value="yes"
+              />
+              <span>[선택] 이메일 수신 동의</span>
+            </label>
+          </div>
+          <div class="optional-agree">
+            <label class="agree-row">
+              <input type="checkbox" name="is-sns-recieve-agree" value="yes" />
+              <span>[선택] SMS, SNS 수신 동의</span>
+            </label>
+          </div>
+          <div class="optional-agree">
+            <label class="agree-row">
+              <input type="checkbox" name="is-push-agree" value="yes" />
+              <span>[선택] 앱 푸시 수신 동의</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <br />
+
+        <button type="submit">동의하고 가입하기</button>
+      </form>
+      <p>c Coupang Corp, All rights reserved.</p>
+    </div>
+  </body>
+  <script>
+    
+  </script>
+</html>

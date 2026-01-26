@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체크박스(장바구니)</title>
+  </head>
+  <body>
+    <div>
+      <label><input type="checkbox" value="선택1" /><span>선택 1</span></label>
+      <label><input type="checkbox" value="선택2" /><span>선택 2</span></label>
+      <label><input type="checkbox" value="선택3" /><span>선택 3</span></label>
+      <p id="result"></p>
+    </div>
+  </body>
+  <script>
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const result = document.querySelector("#result");
+
+    // 1. text로 값을 추가하는 경우
+    // checkboxes.forEach((checkbox) => {
+    //   checkbox.addEventListener("click", (e) => {
+    //     if(e.target.checked){
+    //       result.innerText += e.target.value
+    //     }else{
+    //       result.innerText = result.innerText.replace(`${e.target.value}`, "")
+    //     }
+    //   })
+    // })
+
+    // 2. 요소를 추가하는 경우
+    NodeList.prototype.filter = Array.prototype.filter;
+    NodeList.prototype.find = Array.prototype.find;
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("click", (e) => {
+        if (e.target.checked) {
+          const strong = document.createElement("strong");
+          strong.innerText = e.target.value;
+          strong.style.marginRight = "8px";
+          result.appendChild(strong);
+        } else {
+          const strongs = document.querySelectorAll("#result strong");
+          const tartget1 = strongs.filter(
+            (strong) => strong.innerText == e.target.value,
+          )[0];
+          const tartget2 = strongs.find(
+            (strong) => strong.innerText == e.target.value,
+          );
+          result.removeChild(tartget1);
+        }
+      });
+    });
+  </script>
+</html>

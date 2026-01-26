@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="https://login.coupang.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <title>회원가입</title>
+    <style>
+      form {
+        width: 800px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="">
+      <div>
+        <img
+          src="https://static.coupangcdn.com/image/static/login/logo-coupang.x2.20201201.png"
+          alt="쿠팡 로고"
+        />
+      </div>
+      <div>
+        <strong>회원정보를 입력해주세요</strong>
+      </div>
+      <div>
+        <div>
+          <input name="id" type="text" placeholder="아이디(이메일)" />
+          <p class="id-result"></p>
+        </div>
+        <div>
+          <input name="password" type="password" placeholder="비밀번호" />
+          <p class="password-result"></p>
+        </div>
+        <div>
+          <input
+            name="passwordConfirm"
+            type="password"
+            placeholder="비밀번호 확인"
+          />
+        </div>
+        <div>
+          <input name="name" type="text" placeholder="이름" />
+          <p class="name-result"></p>
+        </div>
+        <div>
+          <input name="phone" type="text" placeholder="휴대폰번호" />
+          <p class="phone-result"></p>
+        </div>
+        <hr />
+        <div>
+          <div>
+            <input type="checkbox" name="all" class="all" /><span
+              ><strong>모두 확인하였으며 동의합니다.</strong></span
+            >
+          </div>
+          <div>
+            <p>
+              전체 동의에는 필수 및 선택 정보에 대한 동의가 포함되어 있으며,
+              개별적으로 동의를 선택 하실 수 있습니다. 선택 항목에 대한 동의를
+              거부하시는 경우에도 서비스 이용이 가능합니다.
+            </p>
+          </div>
+          <fieldset>
+            <ul>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[필수] 만 14세 이상입니다</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[필수] 쿠팡 이용약관 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[필수] 전자금융거래 이용약관 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[필수] 개인정보 수집 및 이용 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[필수] 개인정보 제3자 제공 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[선택] 마케팅 목적의 개인정보 수집 및 이용 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" name="term" class="term" /><span
+                    >[선택] 광고성 정보 수신 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <ul>
+                  <li>
+                    <label
+                      ><input type="checkbox" name="term" class="term" /><span
+                        >[선택] 이메일 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                  <li>
+                    <label
+                      ><input type="checkbox" name="term" class="term" /><span
+                        >[선택] SMS, SNS 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                  <li>
+                    <label
+                      ><input type="checkbox" name="term" class="term" /><span
+                        >[선택] 앱 푸시 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+      </div>
+      <button id="btn" type="button">동의하고 가입하기</button>
+    </form>
+  </body>
+  <script>
+    // 유효성 검사
+    const id = document.querySelector("input[name='id']");
+    const password = document.querySelector("input[name='password']");
+    const name = document.querySelector("input[name='name']");
+    const phone = document.querySelector("input[name='phone']");
+
+    globalThis.flag = new Array(5).fill(false);
+
+    const confirmArray = Array.of(id, password, name, phone);
+    confirmArray.forEach((input, i) => {
+      input.addEventListener("blur", (e) => {
+        const className = `.${e.target.name}-result`;
+        const result = document.querySelector(className);
+
+        if (!e.target.value) {
+          // alert(e.target.name)
+          result.innerText = `${e.target.name}을 확인해주세요.`;
+          result.style.color = "red";
+          globalThis.flag[i] = false;
+          return;
+        }
+
+        globalThis.flag[i] = true;
+        result.style.color = "";
+        result.innerText = "";
+      });
+    });
+
+    // 체크박스
+    NodeList.prototype.map = Array.prototype.map;
+    const form = document.querySelector("form");
+    const button = document.querySelector("button#btn");
+    const terms = document.querySelectorAll(".term");
+    const all = document.querySelector(".all");
+
+    all.addEventListener("click", (e) => {
+      terms.forEach((term) => {
+        term.checked = e.target.checked;
+        globalThis.flag[4] = e.target.checked;
+      });
+    });
+
+    terms.forEach((term) => {
+      term.addEventListener("click", (e) => {
+        const confirm =
+          terms.map((term) => term.checked).filter((check) => check).length ===
+          terms.length;
+        all.checked = confirm;
+        globalThis.flag[4] = confirm;
+      });
+    });
+
+    button.addEventListener("click", (e) => {
+      if (!globalThis.flag.filter((check) => check).length === 5) {
+        alert("유효성 검사가 완료되지 않았습니다.😥");
+        return;
+      }
+
+      form.submit();
+    });
+  </script>
+</html>

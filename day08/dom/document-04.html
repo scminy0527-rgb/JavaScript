@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쿼리선택자</title>
+  </head>
+  <body>
+    <h1>쿼리 선택자를 이용한 선택</h1>
+    <p>첫 번째 단락이에요</p>
+    <ul>
+      <li class="list odd">치킨공식</li>
+      <li class="list even">핸드폰</li>
+      <li class="list odd">맥북</li>
+      <li class="list even">해커스</li>
+      <li class="list odd">제로콜라</li>
+      <li class="list even">코카콜라</li>
+      <li class="list odd">고양이</li>
+    </ul>
+  </body>
+  <script>
+    // css 에서 호출하는 방식대로 . 찍어서 불러오기
+    const list = document.querySelectorAll(".list");
+    // console.log(list);
+    // NodeList.prototype.filter = Array.prototype.filter;
+    Array.from(list).forEach((value) => {
+      if (value.textContent.includes("콜라")) {
+        value.style.color = "pink";
+        // value.style.textDecoration = "none";
+      }
+    });
+  </script>
+</html>

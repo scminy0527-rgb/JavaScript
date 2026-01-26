@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="https://login.coupang.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <title>회원가입</title>
+    <style>
+      input:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="signup-form" action="#회원가입">
+      <div>
+        <img
+          src="https://static.coupangcdn.com/image/static/login/logo-coupang.x2.20201201.png"
+          alt="쿠팡 로고"
+        />
+      </div>
+      <div>
+        <strong>회원정보를 입력해주세요</strong>
+      </div>
+      <div>
+        <div>
+          <img src="" alt="" /><input
+            type="text"
+            class="signup-input id"
+            placeholder="아이디(이메일)"
+          />
+        </div>
+        <div>
+          <img src="" alt="" /><input
+            type="password"
+            class="signup-input pw"
+            placeholder="비밀번호"
+          />
+        </div>
+        <div>
+          <img src="" alt="" /><input
+            type="password"
+            class="signup-input pw-check"
+            placeholder="비밀번호 확인"
+          />
+        </div>
+        <div>
+          <img src="" alt="" /><input
+            type="text"
+            class="signup-input name"
+            placeholder="이름"
+          />
+        </div>
+        <div>
+          <img src="" alt="" /><input
+            type="text"
+            class="signup-input pnum"
+            placeholder="휴대폰번호"
+          />
+        </div>
+        <hr />
+        <div>
+          <div>
+            <input type="checkbox" name="all" class="all-term" /><span
+              ><strong>모두 확인하였으며 동의합니다.</strong></span
+            >
+          </div>
+          <div>
+            <p>
+              전체 동의에는 필수 및 선택 정보에 대한 동의가 포함되어 있으며,
+              개별적으로 동의를 선택 하실 수 있습니다. 선택 항목에 대한 동의를
+              거부하시는 경우에도 서비스 이용이 가능합니다.
+            </p>
+          </div>
+          <fieldset>
+            <ul>
+              <li>
+                <label
+                  ><input type="checkbox" class="term must-term" /><span
+                    >[필수] 만 14세 이상입니다</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term must-term" /><span
+                    >[필수] 쿠팡 이용약관 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term must-term" /><span
+                    >[필수] 전자금융거래 이용약관 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term must-term" /><span
+                    >[필수] 개인정보 수집 및 이용 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term must-term" /><span
+                    >[필수] 개인정보 제3자 제공 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term optional-term" /><span
+                    >[선택] 마케팅 목적의 개인정보 수집 및 이용 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <label
+                  ><input type="checkbox" class="term optional-term" /><span
+                    >[선택] 광고성 정보 수신 동의</span
+                  ></label
+                >
+              </li>
+              <li>
+                <ul>
+                  <li>
+                    <label
+                      ><input type="checkbox" class="term optional-term" /><span
+                        >[선택] 이메일 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                  <li>
+                    <label
+                      ><input type="checkbox" class="term optional-term" /><span
+                        >[선택] SMS, SNS 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                  <li>
+                    <label
+                      ><input type="checkbox" class="term optional-term" /><span
+                        >[선택] 앱 푸시 수신 동의</span
+                      ></label
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+      </div>
+      <button id="submit-button" class="submit-button" type="button">
+        동의하고 가입하기
+      </button>
+    </form>
+  </body>
+  <script>
+    // 유효성 검사 및 체크박스 전체 동의 로직 완성시키기!
+    const infoInputFields = document.querySelectorAll(".signup-input");
+
+    const allTerm = document.querySelector(".all-term");
+    const termCheckBoxes = document.querySelectorAll(".term");
+
+    const button = document.querySelector(".submit-button");
+    const form = document.querySelector(".signup-form");
+    console.log(button);
+    console.log(form);
+
+    // 동의 및 비동의 한 항목
+    // 여기서는 필수 동의만 하더라도 다음 단계로 넘어갈 수 있게 해야함
+    let agreedTerms = [];
+    let agreedMustTerms = [];
+    let notAgreedTerms = [];
+
+    const lenOfMust = Array.from(termCheckBoxes).filter(
+      (term) => term.classList[1] === "must-term",
+    ).length;
+
+    // 해당 부분은 암호화 나름 필요
+    let password = "";
+
+    let validEmail = false;
+    // 비밀번호 및 확인비밀번호 여부
+    let validPw = false;
+    let validCheckedPw = false;
+
+    let validName = false;
+    let validPnum = false;
+
+    // 텍스트필드 항목 처리하는 콜백함수 정의
+    const checkTextFieldValidation = (e) => {
+      // 해당 필드가 무엇인지 확인
+      let value = e.target.value;
+      let inputClass = e.target.classList[1];
+      console.log(lenOfMust);
+
+      switch (inputClass) {
+        case "id":
+          console.log("이메일 유효성 체크");
+          if (!value.includes("@")) {
+            console.log("올바르지 못한 이메일");
+            validEmail = false;
+          } else {
+            console.log("올바른 이메일");
+            validEmail = true;
+          }
+          break;
+
+        case "pw":
+          password = value;
+          console.log(value);
+          console.log(value.length);
+          if (value.length < 9) {
+            console.log("비밀번호가 너무 짧습니다.");
+            validPw = false;
+          } else {
+            console.log("적당한 길이의 비밀번호");
+            validPw = true;
+          }
+          break;
+
+        case "pw-check":
+          if (value === password) {
+            console.log("비밀번호 확인 이상 무");
+            validCheckedPw = true;
+          } else {
+            console.log("비밀번호 다시 확인");
+            validCheckedPw = false;
+          }
+          break;
+
+        case "name":
+          if (value < 2) {
+            // 이름이 한글자인 비정상적인 경우
+            console.log("올바른 이름을 입력해주세요");
+            validName = false;
+          } else {
+            validName = true;
+          }
+          break;
+
+        case "pnum":
+          // 이건 전화번호를 파싱 해서 올바르게 입력 했는지 봐야함
+          const pnumParse = value.split("-");
+
+          if (pnumParse.length < 3) {
+            console.log("잘못된 전화번호 형식");
+            validPnum = false;
+          } else {
+            if (pnumParse[0].length < 2) {
+              console.log("잘못된 전화번호 형식");
+              validPnum = false;
+              break;
+            }
+
+            if (pnumParse[1].length < 3 || pnumParse[2].length < 4) {
+              console.log("잘못된 전화번호 형식");
+              validPnum = false;
+              break;
+            }
+
+            validPnum = true;
+          }
+          console.log(`번호: ${validPnum}`);
+
+          break;
+      }
+    };
+
+    // 인풋 항목부터 처리하기
+    infoInputFields.forEach((infoField) => {
+      // 각 필터에 리스너 걸기
+      infoField.addEventListener("input", checkTextFieldValidation);
+    });
+
+    console.log(infoInputFields);
+    console.log(termCheckBoxes);
+
+    // 이름 이메일 비밀번호 등의 유효성 검사
+    // 각 동의 상태 확인하는 부분 갱신하는 함수 정의
+    function checkAgreeState() {
+      agreedTerms = Array.from(termCheckBoxes).filter((term) => term.checked);
+      notAgreedTerms = Array.from(termCheckBoxes).filter(
+        (term) => !term.checked,
+      );
+      agreedMustTerms = Array.from(termCheckBoxes).filter(
+        (term) => term.checked && term.className.includes("must-term"),
+      );
+
+      // qa
+      console.log(`동의 갯수: ${agreedTerms.length}`);
+      console.log(`필수 동의 갯수: ${agreedMustTerms.length}`);
+    }
+
+    // 체크박스 관련
+    // 1. 전체 동의 클릭 하면 모든 약관 동의가 되는 구조
+    allTerm.addEventListener("click", (e) => {
+      Array.from(termCheckBoxes).forEach((term) => {
+        term.checked = e.target.checked;
+      });
+
+      checkAgreeState();
+    });
+
+    // 2. 만약 중간에 하나 해제 하거나, 일일히 다 클릭해서 하면 전체동의 활성화 여부 바꾸기
+    termCheckBoxes.forEach((term) => {
+      term.addEventListener("click", (e) => {
+        checkAgreeState();
+
+        if (agreedTerms.length === termCheckBoxes.length) {
+          allTerm.checked = true;
+        } else {
+          allTerm.checked = false;
+        }
+      });
+    });
+
+    // 버튼에 리스너
+    button.addEventListener("click", (e) => {
+      if (
+        agreedTerms.length === lenOfMust &&
+        validEmail &&
+        validPw &&
+        validCheckedPw &&
+        validName &&
+        validPnum
+      ) {
+        console.log("회원가입 수행");
+        form.submit();
+      } else {
+        console.log("회원가입 수준 부족");
+      }
+    });
+  </script>
+</html>

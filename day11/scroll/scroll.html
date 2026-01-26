@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스크롤 실습</title>
+    <style>
+      #member {
+        width: 400px;
+        height: 400px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+      }
+
+      #wrap {
+        height: 5000px;
+      }
+
+      .goodbye {
+        animation: goodbye 1s linear forwards;
+      }
+
+      @keyframes goodbye {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(100px, -1000px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <img id="member" src="./images/image.png" alt="이규학" />
+    </div>
+  </body>
+  <script>
+    const member = document.querySelector("#member");
+    window.addEventListener("scroll", (e) => {
+      // offset 가지고 이벤트 시점거는 개념
+      console.log(window.scrollY > 3000);
+      if (window.scrollY > 3000) {
+        member.setAttribute("class", "goodbye");
+      }
+    });
+  </script>
+</html>

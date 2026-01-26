@@ -1,0 +1,1 @@
+console.log("신철민");

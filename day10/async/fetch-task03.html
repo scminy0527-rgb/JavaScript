@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>화면에 이미지 불러오기</title>
+  </head>
+  <body>
+    <ul id="result"></ul>
+  </body>
+  <script>
+    const result = document.querySelector("#result");
+
+    // https://picsum.photos/v2/list?page=1&limit=10](https://picsum.photos/v2/list?page=1&limit=10)
+    const getDatas = async () => {
+      const response = await fetch(
+        "https://picsum.photos/v2/list?page=1&limit=10](https://picsum.photos/v2/list?page=1&limit=10)",
+      );
+      const photos = await response.json();
+      photos.slice(0, 10).forEach((photo) => {
+        // const li = document.createElement("li")
+        // li.setAttribute("class", "내가만든클래스")
+        // li.removeAttribute("class")
+
+        result.innerHTML += `
+        <li>
+          <div class='thumb-wrap'>
+            <img class='thumb' src='${photo.download_url}' />
+            <span>${photo.author}</span>
+          </div>
+        </li>
+      `;
+      });
+    };
+
+    getDatas();
+  </script>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체크박스(장바구니)</title>
+  </head>
+  <body>
+    <div>
+      <label><input type="checkbox" value="선택1" /><span>선택 1</span></label>
+      <label><input type="checkbox" value="선택2" /><span>선택 2</span></label>
+      <label><input type="checkbox" value="선택3" /><span>선택 3</span></label>
+      <p id="result"></p>
+    </div>
+  </body>
+  <script>
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const result = document.querySelector("#result");
+
+    // 추가를 한 위젯들 (장바구니 개념) (일단 체크박스 3개 만큼)
+    const widgetArray = Array(3).fill(0);
+
+    checkboxes.forEach((checkbox, i) => {
+      checkbox.addEventListener("click", (e) => {
+        // 실습: strong 태그로 변경
+        // 단 innerHTML은 사용 불가!
+        // document05.html을 참조!
+
+        // 체크가 되면 장바구니에 할당 하면서 이를 위젯에 표현
+        if (e.target.checked) {
+          const strongTag = document.createElement("strong");
+          strongTag.innerText = e.target.value;
+          // strongTag.style.color = "red";
+          // 장바구니 배열에 담는 개념
+          widgetArray[i] = strongTag;
+          // 표현
+          result.appendChild(strongTag);
+        } else {
+          // 장바구니에 담아놓은 위젯을 기반으로 위젯 삭제하는 개념
+          result.removeChild(widgetArray[i]);
+          widgetArray[i] = 0;
+        }
+      });
+    });
+  </script>
+</html>

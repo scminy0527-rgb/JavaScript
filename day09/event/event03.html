@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>클릭 이벤트</title>
+    <style>
+      input:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 아이디와 비밀번호의 유효성 검사 -->
+    <form action="#제출완료">
+      <div>
+        <label>
+          <span>아이디</span>
+          <input type="text" name="id" placeholder="아이디를 입력하세요" />
+          <p id="id-result"></p>
+        </label>
+      </div>
+      <div>
+        <label>
+          <span>비밀번호</span>
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호를 입력하세요"
+          />
+          <p id="password-result"></p>
+        </label>
+      </div>
+      <button type="button">로그인</button>
+    </form>
+  </body>
+  <script>
+    const form = document.querySelector("form");
+    const id = document.querySelector("input[name='id']");
+    const password = document.querySelector("input[name='password']");
+    const button = document.querySelector("button[type='button']");
+    const idResult = document.querySelector("#id-result");
+    const passwordResult = document.querySelector("#password-result");
+    // 전역변수
+    globalThis.flag = new Array(false, false);
+
+    // focus, blur를 사용하여 유효성 검사
+    // focus가 되면 input의 border의 색상을 변경 + @
+    // blur가 되면 input의 border 색상을 삭제 + @
+    id.addEventListener("focus", (e) => {
+      e.target.style.border = "1px solid #00c4c4";
+    });
+
+    id.addEventListener("blur", (e) => {
+      let value = e.target.value;
+      e.target.style.border = "1px solid rgb(118, 118, 118)";
+      if (!value) {
+        idResult.innerText = "아이디가 없습니다.😥";
+        idResult.style.color = "red";
+        idResult.style.fontSize = "12px";
+        globalThis.flag[0] = false;
+        return;
+      }
+
+      idResult.innerText = "멋진 아이디네요!";
+      idResult.style.color = "blue";
+      globalThis.flag[0] = true;
+    });
+
+    password.addEventListener("focus", (e) => {
+      e.target.style.border = "1px solid #00c4c4";
+    });
+
+    password.addEventListener("blur", (e) => {
+      let value = e.target.value;
+      e.target.style.border = "1px solid rgb(118, 118, 118)";
+      if (!value) {
+        passwordResult.innerText = "비밀번호를 입력하세요.";
+        passwordResult.style.color = "red";
+        passwordResult.style.fontSize = "12px";
+        globalThis.flag[1] = false;
+        return;
+      }
+
+      passwordResult.innerText = "검증 완료!";
+      passwordResult.style.color = "blue";
+      globalThis.flag[1] = true;
+    });
+
+    button.addEventListener("click", (e) => {
+      // 아이디와 비밀번호가 모두 검증되었는지
+      if (globalThis.flag.filter((check) => check).length != 2) {
+        alert("정확히 입력하세요");
+        return;
+      }
+
+      form.submit();
+    });
+  </script>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>키보드 이벤트 실습</title>
+  </head>
+  <body>
+    <input type="text" name="name" placeholder="색상을 입력하세요!" />
+    <p id="name"></p>
+  </body>
+  <script>
+    // 사용자가 입력한 색상이 pink라면 글자색을 pink
+    // 사용자가 입력한 색상이 blue라면 글자색이 blue
+    // 사용자가 입력한 색상이 green이라면 글자크기를 20px
+    // 그 외 값들은 모두 초기화
+    const colorInput = document.querySelector("input[name = 'name']");
+    const p = document.querySelector("p[id = 'name']");
+
+    colorInput.addEventListener("input", (e) => {
+      console.log(e.target.value);
+      console.log(e.key);
+
+      // 엔터 치면 색 바뀌기
+
+      const color = e.target.value;
+      // 초기화는 color = '' 라고 할 수도 있음
+      p.style = null;
+      p.innerText = color;
+
+      if (color === "pink" || color === "blue") {
+        p.style.color = color;
+      }
+
+      if (color === "green") {
+        p.style.fontSize = "20px";
+      }
+    });
+  </script>
+</html>

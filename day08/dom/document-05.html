@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>객체를 동적으로 생성, 삽입, 삭제</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <p>DOM 트리에 동적으로 객체를 삽이발 수 있다.</p>
+        <p>
+          1. createElement("태그명") <br />
+          2. appendChild("태그객체") <br />
+          3. removeChild(태그객체) 또는 remove()
+        </p>
+        <p>
+          위 4개의 객체를 이용해서 매소드를 이용해서 새로운 객체를 생성, 삽입,
+          삭제 한다.
+        </p>
+      </div>
+      <div id="wrap"></div>
+      <a href="javascript:createDiv()">div 생성</a>
+    </div>
+  </body>
+  <script>
+    const wrap = document.querySelector("#wrap");
+    globalThis.number = 1;
+
+    function createDiv() {
+      const colors = Array.of(
+        "blue",
+        "green",
+        "purple",
+        "grey",
+        "red",
+        "orange",
+      );
+
+      // 0 부터 n-1 까지 값 중 랜덤한 값을 반환
+      // floor 내림 처리
+      // ceil 올림 처리
+      Math.floor();
+      const i = Math.floor(Math.random() * colors.length);
+      console.log(i);
+
+      console.log("함수");
+      const div = document.createElement("div");
+      div.innerText = `새로 생성 된 div ${globalThis.number++}번 입니다.`;
+      div.style.color = colors[i];
+
+      // 화면에 div 추가 및 추가되는 div 에 클릭 리스너 거는 개념
+      wrap.appendChild(div);
+      // this 쓰고 싶다면 화살표 함수말고 일반 함수 써야함
+      div.onclick = function () {
+        // this.remove();
+        this.parentElement.removeChild(this);
+      };
+    }
+  </script>
+</html>
